@@ -1,16 +1,31 @@
 import asyncio
-import os
-import random
 import datetime
+import os
+# import random
 import requests
+import time
 
 from pontis.core.const import NETWORK, ORACLE_ADDRESS
 from pontis.core.utils import str_to_felt
 from pontis.publisher.client import PontisPublisherClient
 from starkware.crypto.signature.signature import sign
+from starkware.cairo.lang.vm.crypto import pedersen_hash
 
 DECIMALS = 18
-FELT_SIZE = 2 ** 252
+P = 2 ** 251 + 17 * 2 ** 192 + 1
+SLEEP_INTERVAL = 30
+
+# def hex_to_felt(val):
+#     return int(val, 16)
+
+def hex_to_felt(val):
+    return hex_to_int(val) % P
+
+def hex_to_int(val):
+    return int(val, 16)
+
+def splitRandomness(val):
+    return val[:32], val[32:]
 
 async def main():
     PUBLISHER_PRIVATE_KEY = int(os.environ.get("PUBLISHER_PRIVATE_KEY"))
@@ -25,10 +40,11 @@ async def main():
     response.raise_for_status()
     result = response.json()
     randomness = result["randomness"]
-    randomnessInt = int(randomness, 16)
-    randomnessFelt = randomnessInt % FELT_SIZE
+    part1, part2 = splitRandomness(randomness)
+    randomnessFelt = pedersen_hash(hex_to_int(part1), hex_to_int(part2))
+    # randomnessFelt = hex_to_felt(randomness)
     print(f"[INFO] drand result {result}")
-    print(f"[INFO] randomness {randomness}, randomnessInt {randomnessInt}, randomnessFelt {randomnessFelt}")
+    print(f"[INFO] randomness {randomness}, randomnessFelt {randomnessFelt}")
 
     # random_number = random.randrange(FELT_SIZE)
     timestamp = int(
@@ -50,5 +66,9 @@ async def main():
 
     print(f"Submitted random number {randomnessFelt} at timestamp {timestamp} for {PUBLISHER} under key {KEY}")
 
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    while True:
+        asyncio.run(main())
+        print(f"Sleeping for {SLEEP_INTERVAL} seconds")
+        time.sleep(SLEEP_INTERVAL)
