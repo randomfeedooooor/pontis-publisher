@@ -32,10 +32,12 @@ docker run --env-file .secrets.env -t pontis-publisher
 - [x] V1: Publish a random number
 - [x] V2: Use <https://drand.love/>
 - [x] V3: Make script run continuously
-- [ ] V4: Write verifier that assumes proof is always valid and submits random number to Pontis
+- [ ] V4: Write verifier for drand
 
 ## Links
 
 1. <https://cairo-utils-web.vercel.app/>
 1. <https://rocky-volleyball-654.notion.site/Pontis-f5103d8ecc9d49a6844323819570c1b6>
 1. <https://hub.docker.com/r/42labs/pontis-publisher/>
+1. <https://drand.love/docs/overview/>
+1. <https://github.com/0xNonCents/cairo-bls12-381>
