@@ -2,6 +2,7 @@ import asyncio
 import os
 import random
 import datetime
+import requests
 
 from pontis.core.const import NETWORK, ORACLE_ADDRESS
 from pontis.core.utils import str_to_felt
@@ -15,6 +16,15 @@ async def main():
     PUBLISHER_PRIVATE_KEY = int(os.environ.get("PUBLISHER_PRIVATE_KEY"))
     PUBLISHER = "randomfeedooooor"
     KEY = "rand1"
+
+    url = "https://drand.cloudflare.com"
+    request_path = "/info"
+    method = "GET"
+    headers = {"Accept": "application/json"}
+    response = requests.request(method, url + request_path, headers=headers)
+    response.raise_for_status()
+    result = response.json()
+    print(f"result {result}")
 
     random_number = random.randrange(FELT_SIZE)
     timestamp = int(
