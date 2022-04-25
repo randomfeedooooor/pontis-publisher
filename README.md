@@ -31,7 +31,8 @@ docker run --env-file .secrets.env -t pontis-publisher
 - [x] V0: Publish a constant number
 - [x] V1: Publish a random number
 - [x] V2: Use <https://drand.love/>
-- [ ] V3: Make script run continuously
+- [x] V3: Make script run continuously
+- [ ] V4: Write verifier that assumes proof is always valid and submits random number to Pontis
 
 ## Links
 
