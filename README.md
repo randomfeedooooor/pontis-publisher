@@ -28,8 +28,9 @@ docker run --env-file .secrets.env -t pontis-publisher
 
 ## Tasks
 
-- [x] Publish a constant number
-- [x] Publish a random number
+- [x] V0: Publish a constant number
+- [x] V1: Publish a random number
+- [ ] V2: Make script run continuously
 
 ## Links
 
