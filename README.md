@@ -32,7 +32,7 @@ docker run --env-file .secrets.env -t pontis-publisher
 - [x] V1: Publish a random number
 - [x] V2: Use <https://drand.love/>
 - [x] V3: Make script run continuously
-- [ ] V4: Write verifier for drand (skipped because [https://github.com/0xNonCents/cairo-bls12-381](https://github.com/0xNonCents/cairo-bls12-381) isn't usable yet)
+- [ ] V4: Write verifier for drand (skipped because [https://github.com/0xNonCents/cairo-bls12-381](https://github.com/0xNonCents/cairo-bls12-381) isn't usable yet. bls12-381 takes a long time to run in native cairo so we attempted to run in [oriac](https://github.com/xJonathanLEI/oriac) but fails [here](https://github.com/xJonathanLEI/oriac/blob/master/src/cairo/lang/vm/cairo_runner.rs#L634))
 - [ ] V5: Write a Cairo proxy contract that accepts drand and proxies it to Pontis
 - [ ] V6: Add a method to contract to subscribe to public key (put this in contract storage)
 - [ ] V7: Add a method `setAlpha()` and `getAlpha()` to contract
