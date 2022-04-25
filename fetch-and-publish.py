@@ -18,15 +18,19 @@ async def main():
     KEY = "rand1"
 
     url = "https://drand.cloudflare.com"
-    request_path = "/info"
+    request_path = "/public/latest"
     method = "GET"
     headers = {"Accept": "application/json"}
     response = requests.request(method, url + request_path, headers=headers)
     response.raise_for_status()
     result = response.json()
-    print(f"result {result}")
+    randomness = result["randomness"]
+    randomnessInt = int(randomness, 16)
+    randomnessFelt = randomnessInt % FELT_SIZE
+    print(f"[INFO] drand result {result}")
+    print(f"[INFO] randomness {randomness}, randomnessInt {randomnessInt}, randomnessFelt {randomnessFelt}")
 
-    random_number = random.randrange(FELT_SIZE)
+    # random_number = random.randrange(FELT_SIZE)
     timestamp = int(
                 datetime.datetime.now(datetime.timezone.utc)
                 .replace(tzinfo=datetime.timezone.utc)
@@ -42,9 +46,9 @@ async def main():
         ORACLE_ADDRESS, PUBLISHER_PRIVATE_KEY, PUBLISHER, network=NETWORK
     )
 
-    await client.publish(KEY, random_number, timestamp)
+    await client.publish(KEY, randomnessFelt, timestamp)
 
-    print(f"Submitted random number {random_number} at timestamp {timestamp} for {PUBLISHER} under key {KEY}")
+    print(f"Submitted random number {randomnessFelt} at timestamp {timestamp} for {PUBLISHER} under key {KEY}")
 
 if __name__ == "__main__":
     asyncio.run(main())
