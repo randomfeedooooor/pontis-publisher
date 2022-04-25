@@ -115,9 +115,11 @@ def ecvrf_verify(y, pi_string, alpha_string):
 
     # 1. D = ECVRF_decode_proof(pi_string)
     d = _ecvrf_decode_proof(pi_string)
+    print('decoded pi: ', d)
 
     # 2. If D is "INVALID", output "INVALID" and stop
     if d == "INVALID":
+        print("d INVALID ABORTED")
         return "INVALID", []
 
     # 3. (Gamma, c, s) = D
@@ -126,12 +128,14 @@ def ecvrf_verify(y, pi_string, alpha_string):
     # 4. H = ECVRF_hash_to_curve(suite_string, y, alpha_string)
     h = _ecvrf_hash_to_curve_elligator2_25519(SUITE_STRING, y, alpha_string)
     if h == "INVALID":
+        print("h INVALID ABORTED")
         return "INVALID", []
 
     # 5. U = s*B - c*y
     y_point = _decode_point(y)
     h_point = _decode_point(h)
     if y_point == "INVALID" or h_point == "INVALID":
+        print("y_point INVALID ABORTED")
         return "INVALID", []
     s_b = _scalar_multiply(p=BASE, e=s)
     c_y = _scalar_multiply(p=y_point, e=c)
@@ -154,6 +158,7 @@ def ecvrf_verify(y, pi_string, alpha_string):
     if c == cp:
         return ecvrf_proof_to_hash(pi_string)  # Includes logic for VALID/INVALID
     else:
+        print("c == cp INVALID ABORTED")
         return "INVALID", []
 
 

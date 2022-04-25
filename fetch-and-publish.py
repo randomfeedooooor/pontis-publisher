@@ -59,17 +59,17 @@ async def main():
 
     # Initial random seed from python
     private_key = get_random_private_key() 
-    public_key = private_to_stark_key(private_key)
-    print('private: ', private_key)
-    print('public: ', public_key)
-
+    
+    # The public key generated from the private key through stark 
+    # is different from public key geenrated by ecvrf 
+    # stark_key = private_to_stark_key(private_key)
+    
     private_key = private_key.to_bytes(32, 'big')
-    public_key = public_key.to_bytes(32, 'big')
+    public_key = ecvrf.get_public_key(private_key)
 
     # Drand randomnessFelt as alpha (octet string) 
     alpha_string = randomnessFelt.to_bytes(32, 'big')
-    # alpha_octet = alpha_string[0:8] 
-    alpha_octet = b'I bid $100 for the horse named IntegrityChain'
+    alpha_octet = alpha_string[0:8] 
 
     # status returns valid or invalid upon completion 
     p_status, pi_string = ecvrf.ecvrf_prove(private_key, alpha_octet)
@@ -96,7 +96,7 @@ async def main():
                 .timestamp()
             )
 
-    await client.publish(KEY, randomnessFelt, timestamp)
+    await client.publish(KEY, beta_string, timestamp)
     print(f"Submitted random number {beta_string} at timestamp {timestamp} for {PUBLISHER} under key {KEY}")
 
 
