@@ -34,7 +34,7 @@ docker run --env-file .secrets.env -t pontis-publisher
 - [x] V3: Make script run continuously
 - [ ] V4: Write verifier for drand (skipped because [https://github.com/0xNonCents/cairo-bls12-381](https://github.com/0xNonCents/cairo-bls12-381) isn't usable yet. bls12-381 tests take 35 mins to run in native cairo so we attempted to run in [oriac](https://github.com/xJonathanLEI/oriac) but fails [here](https://github.com/xJonathanLEI/oriac/blob/master/src/cairo/lang/vm/cairo_runner.rs#L634))
 - [ ] V5: Write a Cairo proxy contract that accepts drand and proxies it to Pontis
-- [ ] V6: Add a method to contract to subscribe to public key (put this in contract storage)
-- [ ] V7: Add a method `setAlpha()` and `getAlpha()` to contract
+- [ ] V6: Add a method `setPublicKey(publicKey: felt)` to contract (put this in contract storage)
+- [ ] V7: Add a method `setAlpha(alpha: felt)` and `getAlpha()` to contract
 - [ ] V8: Add a method to accept a proof and random number (random number = 1)(assume "verification" of proof is always true)
-- [ ] V8: Accept `setAlpha()` from drand
+- [ ] V8: Accept `setAlpha(alpha: felt)` from drand relayer
