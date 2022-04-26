@@ -17,8 +17,13 @@ vim secrets.env
 ### How to publish data
 
 ```shell
-docker build . -t pontis-publisher
-docker run --env-file .secrets.env -t pontis-publisher
+# Publish to Pontis
+docker build . --tag publish-to-pontis --file ./publish-to-pontis.Dockerfile
+docker run --env-file .secrets.env -t publish-to-pontis
+
+# Publish to verifier (work in progress)
+docker build . --tag publish-to-verifier --file ./publish-to-verifier.Dockerfile
+docker run --env-file .secrets.env -t publish-to-verifier
 ```
 
 ### How to query data

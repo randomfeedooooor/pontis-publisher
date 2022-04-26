@@ -102,16 +102,17 @@ async def main():
     else:
         print("COMMITMENT NOT VERIFIED")
 
+    # timestamp = int(
+    #             datetime.datetime.now(datetime.timezone.utc)
+    #             .replace(tzinfo=datetime.timezone.utc)
+    #             .timestamp()
+    #         )
 
-    timestamp = int(
-                datetime.datetime.now(datetime.timezone.utc)
-                .replace(tzinfo=datetime.timezone.utc)
-                .timestamp()
-            )
+    # TODO publish this to verifier contract
 
-    await client.publish(KEY, beta_string, timestamp)
-    debug_publish(client, KEY, beta_string, timestamp)
-    print(f"Submitted random number {beta_string} at timestamp {timestamp} for {PUBLISHER} under key {KEY}")
+    # await client.publish(KEY, int.from_bytes(beta_string, "big"), timestamp)
+    # debug_publish(client, KEY, beta_string, timestamp)
+    # print(f"Submitted random number {beta_string} at timestamp {timestamp} for {PUBLISHER} under key {KEY}")
 
 
 if __name__ == "__main__":
